@@ -36,6 +36,7 @@
 		DEBDAC411ABB492700B294D8 /* WebKittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebKittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBDAC461ABB492700B294D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEBDAC471ABB492800B294D8 /* WebKittyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKittyTests.swift; sourceTree = "<group>"; };
+		DECBFC851ABB4E2B00BF5EFD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 		DEBDAC231ABB492500B294D8 = {
 			isa = PBXGroup;
 			children = (
+				DECBFC851ABB4E2B00BF5EFD /* README.md */,
 				DEBDAC2E1ABB492500B294D8 /* WebKitty */,
 				DEBDAC441ABB492700B294D8 /* WebKittyTests */,
 				DEBDAC2D1ABB492500B294D8 /* Products */,
@@ -407,6 +409,7 @@
 				DEBDAC4D1ABB492800B294D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DEBDAC4E1ABB492800B294D8 /* Build configuration list for PBXNativeTarget "WebKittyTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +418,7 @@
 				DEBDAC501ABB492800B294D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
