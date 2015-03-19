@@ -37,6 +37,7 @@
 		DEBDAC461ABB492700B294D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEBDAC471ABB492800B294D8 /* WebKittyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKittyTests.swift; sourceTree = "<group>"; };
 		DECBFC851ABB4E2B00BF5EFD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DEE626DC1ABB4EAA00087D07 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +61,7 @@
 		DEBDAC231ABB492500B294D8 = {
 			isa = PBXGroup;
 			children = (
+				DEE626DC1ABB4EAA00087D07 /* LICENSE */,
 				DECBFC851ABB4E2B00BF5EFD /* README.md */,
 				DEBDAC2E1ABB492500B294D8 /* WebKitty */,
 				DEBDAC441ABB492700B294D8 /* WebKittyTests */,
