@@ -15,5 +15,7 @@ http://stackoverflow.com/questions/25868204/passing-data-to-a-webview-in-ios-8
 
 http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8
 
+http://www.joshuakehn.com/2014/10/29/using-javascript-with-wkwebview-in-ios-8.html
+
 # Results
 
