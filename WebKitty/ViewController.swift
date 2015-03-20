@@ -33,14 +33,13 @@ class ViewController: UIViewController {
         view.addSubview(webView);
 
         constrainWebView()
-        //view.setNeedsLayout()
+        loadExample()
     }
 
     // viewDidLayoutSubviews gets called upon rotation
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         NSLog("viewDidLayoutSubviews")
-        loadExample()
     }
 
     func constrainWebView() {
