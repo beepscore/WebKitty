@@ -45,9 +45,6 @@ class ViewController: UIViewController {
 
     func constrainWebView() {
         // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
-        // http://stackoverflow.com/questions/27494542/when-can-i-activate-deactivate-layout-constraints
-        // http://stackoverflow.com/questions/28521590/size-uiview-to-uiviewcontrollers-view-programmatically
-        // http://makeapppie.com/2014/07/26/the-swift-swift-tutorial-how-to-use-uiviews-with-auto-layout-programmatically/
 
         //let viewDict: [NSObject : AnyObject] = ["view": view, "webView": webView]
         let viewDict = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
