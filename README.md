@@ -13,6 +13,7 @@ https://tetontech.wordpress.com/2014/07/17/objective-c-wkwebview-to-javascript-a
 
 http://stackoverflow.com/questions/25868204/passing-data-to-a-webview-in-ios-8
 
+http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8
 
 # Results
 
