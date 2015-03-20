@@ -13,88 +13,81 @@ class ViewController: UIViewController {
 
     // ! implies variables are optional, implicitly unwrapped
     // app will crash if they aren't set before use
-//    @IBOutlet var webView: WKWebView!
-    @IBOutlet var webView: UIWebView!
+    // changing type from UIWebView to WKWebView affects layout result!!
+    // @IBOutlet var webView: UIWebView!
+    var webView: WKWebView!
 
     override func viewDidLoad() {
+        NSLog("viewDidLoad")
         super.viewDidLoad()
 
-        self.webView = UIWebView(frame:self.view.frame)
-//        self.webView = WKWebView(frame:self.view.frame)
-        self.webView.backgroundColor = UIColor.yellowColor()
-        
-        self.view.addSubview(self.webView);
-        self.webView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.backgroundColor = UIColor.blueColor()
 
-        //self.view.setNeedsLayout()
+        // let configuration = WKWebViewConfiguration()
+        // webView = WKWebView(frame:view.frame, configuration:configuration)
+        // init with default configuration
+        webView = WKWebView(frame:view.frame)
+        webView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        webView.backgroundColor = UIColor.yellowColor()
+        webView.scrollView.backgroundColor = UIColor.redColor()
+        view.addSubview(webView);
+
+        constrainWebView()
+        //view.setNeedsLayout()
     }
 
+    // viewDidLayoutSubviews gets called upon rotation
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.constrainWebView()
+        NSLog("viewDidLayoutSubviews")
     }
 
     func constrainWebView() {
+        // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
         // http://stackoverflow.com/questions/27494542/when-can-i-activate-deactivate-layout-constraints
         // http://stackoverflow.com/questions/28521590/size-uiview-to-uiviewcontrollers-view-programmatically
         // http://makeapppie.com/2014/07/26/the-swift-swift-tutorial-how-to-use-uiviews-with-auto-layout-programmatically/
 
-        let bottomConstraint = NSLayoutConstraint(item:self.webView,
-            attribute:.Bottom,
-            relatedBy:.Equal,
-            toItem:self.view,
-            attribute:.Bottom,
-            multiplier: 1.0,
-            constant: 0.0)
-        
-        let topConstraint = NSLayoutConstraint(item:self.webView,
-            attribute:.Top,
-            relatedBy:.Equal,
-            toItem:self.view,
-            attribute:.Top,
-            multiplier: 1.0,
-            constant: 0.0)
-        
-        let rightConstraint = NSLayoutConstraint(item:self.webView,
-            attribute:.Right,
-            relatedBy:.Equal,
-            toItem:self.view,
-            attribute:.Right,
-            multiplier: 1.0,
-            constant: 0.0)
-        
-        let leftConstraint = NSLayoutConstraint(item:self.webView,
-            attribute:.Left,
-            relatedBy:.Equal,
-            toItem:self.view,
-            attribute:.Left,
-            multiplier: 1.0,
-            constant: 0.0)
+        //let viewDict: [NSObject : AnyObject] = ["view": view, "webView": webView]
+        let viewDict = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
 
-        let widthConstraint = NSLayoutConstraint(item:self.webView,
-            attribute:.Width,
-            relatedBy:.Equal,
-            toItem:self.view,
-            attribute:.Width,
-            multiplier: 1.0,
-            constant: 0.0)
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[webView]|",
+            options: NSLayoutFormatOptions(0),
+            metrics: nil,
+            views: viewDict)
+        NSLayoutConstraint.activateConstraints(horizontalConstraints)
 
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[webView]|",
+            options: NSLayoutFormatOptions(0),
+            metrics: nil,
+            views: viewDict)
+        NSLayoutConstraint.activateConstraints(verticalConstraints)
 
-        // TODO: fix bug rotate to landscape right margin
-//        widthConstraint.priority = 400
-//        NSLayoutConstraint.activateConstraints([bottomConstraint, topConstraint,
-//            leftConstraint, rightConstraint])
-//        NSLayoutConstraint.activateConstraints([topConstraint, bottomConstraint, widthConstraint])
-        NSLayoutConstraint.activateConstraints([topConstraint, bottomConstraint])
+        // when set active the constraint is added to the parent view constraints()
+        // however the argument order for parameters item and toItem does affect the constraint description
+//        let topConstraint = NSLayoutConstraint(item:webView,
+//            attribute:NSLayoutAttribute.Top,
+//            relatedBy:NSLayoutRelation.Equal,
+//            toItem:view,
+//            attribute:NSLayoutAttribute.Top,
+//            multiplier: 1.0,
+//            constant: 0.0)
+//        topConstraint.active = true
 
-        self.view.layoutIfNeeded()
+        logConstraints()
+    }
+
+    func logConstraints() {
+        NSLog("%d view.constraints() %@", view.constraints().count, view.constraints().debugDescription)
+        NSLog("")
+        NSLog("%d webView.constraints() %@", webView.constraints().count, webView.constraints().debugDescription)
+        NSLog("")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
