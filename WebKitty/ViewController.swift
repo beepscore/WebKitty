@@ -40,6 +40,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         NSLog("viewDidLayoutSubviews")
+        loadExample()
     }
 
     func constrainWebView() {
@@ -87,6 +88,13 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func loadExample () {
+        // http://stackoverflow.com/questions/24410473/how-to-convert-this-var-string-to-nsurl-in-swift?rq=1
+        let url = NSURL(string: "http://www.beepscore.com")
+        let request = NSURLRequest(URL:url!)
+        webView.loadRequest(request)
     }
 
 }
