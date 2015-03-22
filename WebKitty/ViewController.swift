@@ -33,7 +33,8 @@ class ViewController: UIViewController {
         view.addSubview(webView);
 
         constrainWebView()
-        loadExample()
+        //loadExample()
+        loadLocalFile("index", fileType: "html")
     }
 
     // viewDidLayoutSubviews gets called upon rotation
@@ -93,5 +94,43 @@ class ViewController: UIViewController {
         webView.loadRequest(request)
     }
 
+    /**
+    @param fileType may start with a period or not e.g. ".html" or "html"
+    */
+    func loadLocalFile (fileName: NSString, fileType: NSString) {
+        if let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType) {
+            
+            if let url = NSURL(fileURLWithPath:path) {
+                
+                // currently WKWebView can't load local file directly
+                // error Could not create a sandbox extension for '/'
+                // let request = NSURLRequest(URL:url!)
+                // webView.loadRequest(request)
+                
+                // workaround: use loadHTMLString instead of loadRequest
+                // http://stackoverflow.com/questions/27803341/swift-wkwebview-loading-local-file-not-working-on-a-device
+                
+                // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
+                var error : NSError?
+                var fileString = String(contentsOfFile: path,
+                    encoding: NSUTF8StringEncoding,
+                    error: &error)
+                if let actualError = error {
+                    NSLog("error : \(actualError)")
+                } else {
+                    if let actualFileString = fileString {
+                        webView.loadHTMLString(actualFileString, baseURL: url)
+                    } else {
+                        NSLog("fileString nil")
+                    }
+                }
+            } else {
+                NSLog("url nil")
+            }
+        } else {
+            NSLog("path nil")
+        }
+    }
+    
 }
 
