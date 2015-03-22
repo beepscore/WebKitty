@@ -26,3 +26,5 @@ http://www.joshuakehn.com/2014/10/29/using-javascript-with-wkwebview-in-ios-8.ht
 
 # Results
 
+WKWebView can't access local resource files
+http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4
