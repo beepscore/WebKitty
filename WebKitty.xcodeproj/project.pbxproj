@@ -13,6 +13,7 @@
 		DEBDAC391ABB492700B294D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEBDAC381ABB492700B294D8 /* Images.xcassets */; };
 		DEBDAC3C1ABB492700B294D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEBDAC3A1ABB492700B294D8 /* LaunchScreen.xib */; };
 		DEBDAC481ABB492800B294D8 /* WebKittyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDAC471ABB492800B294D8 /* WebKittyTests.swift */; };
+		DECED1931ABF3D3000F85D41 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = DECED1921ABF3D3000F85D41 /* index.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		DEBDAC461ABB492700B294D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEBDAC471ABB492800B294D8 /* WebKittyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKittyTests.swift; sourceTree = "<group>"; };
 		DECBFC851ABB4E2B00BF5EFD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DECED1921ABF3D3000F85D41 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = webViewResources/index.html; sourceTree = "<group>"; };
 		DEE626DC1ABB4EAA00087D07 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 		DEBDAC2E1ABB492500B294D8 /* WebKitty */ = {
 			isa = PBXGroup;
 			children = (
+				DECED1911ABF3CDC00F85D41 /* webViewResources */,
 				DEBDAC311ABB492600B294D8 /* AppDelegate.swift */,
 				DEBDAC331ABB492600B294D8 /* ViewController.swift */,
 				DEBDAC351ABB492700B294D8 /* Main.storyboard */,
@@ -114,6 +117,14 @@
 				DEBDAC461ABB492700B294D8 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DECED1911ABF3CDC00F85D41 /* webViewResources */ = {
+			isa = PBXGroup;
+			children = (
+				DECED1921ABF3D3000F85D41 /* index.html */,
+			);
+			name = webViewResources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEBDAC371ABB492700B294D8 /* Main.storyboard in Resources */,
+				DECED1931ABF3D3000F85D41 /* index.html in Resources */,
 				DEBDAC3C1ABB492700B294D8 /* LaunchScreen.xib in Resources */,
 				DEBDAC391ABB492700B294D8 /* Images.xcassets in Resources */,
 			);
