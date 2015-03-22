@@ -5,11 +5,18 @@ Practice using Apple WebKit and WKWebView
 WKWebView
 https://developer.apple.com/library/prerelease/ios/documentation/WebKit/Reference/WKWebView_Ref/index.html#//apple_ref/doc/uid/TP40014624-CH1-DontLinkElementID_41
 
+https://tetontech.wordpress.com/2014/06/12/swift-hybrid-development/
+
+https://tetontech.wordpress.com/2014/06/13/swift-wkwebview-and-calling-from-javascript-to-swift/
+
+https://tetontech.wordpress.com/2014/07/15/swift-to-javascript-and-javascript-to-swift-a-round-trip/
+
+https://tetontech.wordpress.com/2014/07/17/objective-c-wkwebview-to-javascript-and-back/
+
 http://nshipster.com/wkwebkit/
 
 http://developer.telerik.com/featured/why-ios-8s-wkwebview-is-a-big-deal-for-hybrid-development/
 
-https://tetontech.wordpress.com/2014/07/17/objective-c-wkwebview-to-javascript-and-back/
 
 http://stackoverflow.com/questions/25868204/passing-data-to-a-webview-in-ios-8
 
