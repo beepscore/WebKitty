@@ -97,7 +97,7 @@ class ViewController: UIViewController {
     /**
     @param fileType may start with a period or not e.g. ".html" or "html"
     */
-    func loadLocalFile (fileName: NSString, fileType: NSString) {
+    func loadLocalFile (fileName: String, fileType: String) {
         if let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType) {
             
             if let url = NSURL(fileURLWithPath:path) {
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func loadFileAtPathAndHandleError (path: NSString, url: NSURL) {
+    func loadFileAtPathAndHandleError (path: String, url: NSURL) {
 
         // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
         var error : NSError?
