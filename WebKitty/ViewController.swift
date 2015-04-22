@@ -33,8 +33,19 @@ class ViewController: UIViewController {
         view.addSubview(webView);
 
         constrainWebView()
+
         //loadExample()
-        loadLocalFile("index", fileType: "html")
+        //loadLocalFile("index", fileType: "html")
+
+        // duplicateSourceFilesToTempDir
+        var htmlPath = NSBundle.mainBundle().pathForResource("index", ofType: "html")
+        var htmlTempPath = duplicateSourceToTempDir(htmlPath)
+
+        var cssPath = NSBundle.mainBundle().pathForResource("style", ofType: "css")
+        var cssTempPath = duplicateSourceToTempDir(cssPath)
+
+        let request = NSURLRequest(URL: NSURL.fileURLWithPath(htmlTempPath!)!)
+        self.webView.loadRequest(request)
     }
 
     // viewDidLayoutSubviews gets called upon rotation
@@ -108,6 +119,7 @@ class ViewController: UIViewController {
                 
                 // workaround: use loadHTMLString instead of loadRequest
                 // http://stackoverflow.com/questions/27803341/swift-wkwebview-loading-local-file-not-working-on-a-device
+                // index.html references index.css but unfortunatley webView doesn't find or use index.css
                 loadFileAtPathAndHandleError(path, url: url)
 
             } else {
@@ -135,5 +147,29 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    func duplicateSourceToTempDir (filePath: String?) -> String? {
+        // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
+
+        let fileMgr = NSFileManager.defaultManager()
+        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+        var error: NSErrorPointer = nil
+        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true,
+            attributes: nil, error: error) {
+                println("Couldn't create www subdirectory. \(error)")
+                return nil
+        }
+
+        // TODO: Fixme. Overwrite files in tempDir, currently must delete app and reinstall it
+        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+        if !fileMgr.fileExistsAtPath(dstPath) {
+            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
+                println("Couldn't copy file to /tmp/www. \(error)")
+                return nil
+            }
+        }
+        return dstPath
+     }
+
 }
 
