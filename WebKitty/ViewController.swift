@@ -38,6 +38,7 @@ class ViewController: UIViewController {
         //loadLocalFile("index", fileType: "html")
 
         // duplicateSourceFilesToTempDir
+
         var htmlPath = NSBundle.mainBundle().pathForResource("index", ofType: "html")
         var htmlTempPath = duplicateSourceToTempDir(htmlPath)
 
@@ -98,7 +99,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func loadExample () {
+    func loadExample() {
         // http://stackoverflow.com/questions/24410473/how-to-convert-this-var-string-to-nsurl-in-swift?rq=1
         let url = NSURL(string: "http://www.beepscore.com")
         let request = NSURLRequest(URL:url!)
@@ -130,7 +131,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func loadFileAtPathAndHandleError (path: String, url: NSURL) {
+    func loadFileAtPathAndHandleError(path: String, url: NSURL) {
 
         // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
         var error : NSError?
@@ -148,7 +149,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func duplicateSourceToTempDir (filePath: String?) -> String? {
+    func duplicateSourceToTempDir(filePath: String?) -> String? {
         // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
 
         let fileMgr = NSFileManager.defaultManager()
