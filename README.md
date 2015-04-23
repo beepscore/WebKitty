@@ -2,7 +2,8 @@
 Practice using Apple WebKit and WKWebView
 
 # References
-WKWebView
+
+## WKWebView  
 https://developer.apple.com/library/prerelease/ios/documentation/WebKit/Reference/WKWebView_Ref/index.html#//apple_ref/doc/uid/TP40014624-CH1-DontLinkElementID_41
 
 https://tetontech.wordpress.com/2014/06/12/swift-hybrid-development/
@@ -17,14 +18,15 @@ http://nshipster.com/wkwebkit/
 
 http://developer.telerik.com/featured/why-ios-8s-wkwebview-is-a-big-deal-for-hybrid-development/
 
-
 http://stackoverflow.com/questions/25868204/passing-data-to-a-webview-in-ios-8
 
 http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8
 
 http://www.joshuakehn.com/2014/10/29/using-javascript-with-wkwebview-in-ios-8.html
 
+## WKWebView can't access local resource files  
+As a workaround, can copy them to temp directory  
+http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4
+
 # Results
 
-WKWebView can't access local resource files
-http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4
