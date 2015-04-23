@@ -10,6 +10,29 @@ import Foundation
 
 class FileUtils: NSObject {
 
+    class func duplicateSourceToTempDir(filePath: String?) -> String? {
+        // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
+
+        let fileMgr = NSFileManager.defaultManager()
+        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+        var error: NSErrorPointer = nil
+        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true,
+            attributes: nil, error: error) {
+                println("Couldn't create www subdirectory. \(error)")
+                return nil
+        }
+
+        // TODO: Fixme. Overwrite files in tempDir, currently must delete app and reinstall it
+        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
+        if !fileMgr.fileExistsAtPath(dstPath) {
+            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
+                println("Couldn't copy file to /tmp/www. \(error)")
+                return nil
+            }
+        }
+        return dstPath
+     }
+
     func fileNamesAtBundleResourcePath() -> [String] {
         // Returns list of all files in bundle resource path
         // NOTE:
