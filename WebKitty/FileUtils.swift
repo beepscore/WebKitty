@@ -28,14 +28,8 @@ class FileUtils: NSObject {
         }
         
         let destinationPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-
-        if (fileMgr.fileExistsAtPath(destinationPath)) {
-            // delete file to avoid copy error
-            if (!fileMgr.removeItemAtPath(destinationPath, error: &error)) {
-                println("Error removeItemAtPath at \(destinationPath)")
-                println(error.debugDescription)
-                return nil
-            }
+        if (!deleteFileAtPath(destinationPath)) {
+            return nil
         }
         
         if !fileMgr.copyItemAtPath(filePath!, toPath: destinationPath, error: &error) {
@@ -46,6 +40,34 @@ class FileUtils: NSObject {
         return destinationPath
     }
 
+    /**  If file exists, deletes it.
+    return true if file path was nil or file didn't exist or file was deleted
+    return false if file existed but couldn't delete it
+    */
+    class func deleteFileAtPath(filePath : String?) -> Bool {
+        let fileMgr = NSFileManager()
+        
+        if let path = filePath {
+            if fileMgr.fileExistsAtPath(path) {
+                var error: NSError?
+                if (!fileMgr.removeItemAtPath(path, error: &error)) {
+                    println("Error removeItemAtPath at \(path)")
+                    println(error.debugDescription)
+                    return false
+                } else {
+                    // deleted file
+                    return true
+                }
+            } else {
+                // file doesn't exist
+                return true
+            }
+        } else {
+            // filePath nil
+            return true
+        }
+    }
+    
     func fileNamesAtBundleResourcePath() -> [String] {
         // Returns list of all files in bundle resource path
         // NOTE:
