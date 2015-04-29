@@ -10,28 +10,41 @@ import Foundation
 
 class FileUtils: NSObject {
 
+    /**  If source file exists at destination, replaces it.
+    return path to destination file
+    return nil if method fails
+    */
     class func duplicateSourceToTempDir(filePath: String?) -> String? {
         // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
-
+        
         let fileMgr = NSFileManager.defaultManager()
         let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
-        var error: NSErrorPointer = nil
+        var error: NSError?
         if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true,
-            attributes: nil, error: error) {
-                println("Couldn't create www subdirectory. \(error)")
+            attributes: nil, error: &error) {
+                println("Error createDirectoryAtPath at \(tmpPath)")
+                println(error.debugDescription)
                 return nil
         }
+        
+        let destinationPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
 
-        // TODO: Fixme. Overwrite files in tempDir, currently must delete app and reinstall it
-        let dstPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-        if !fileMgr.fileExistsAtPath(dstPath) {
-            if !fileMgr.copyItemAtPath(filePath!, toPath: dstPath, error: error) {
-                println("Couldn't copy file to /tmp/www. \(error)")
+        if (fileMgr.fileExistsAtPath(destinationPath)) {
+            // delete file to avoid copy error
+            if (!fileMgr.removeItemAtPath(destinationPath, error: &error)) {
+                println("Error removeItemAtPath at \(destinationPath)")
+                println(error.debugDescription)
                 return nil
             }
         }
-        return dstPath
-     }
+        
+        if !fileMgr.copyItemAtPath(filePath!, toPath: destinationPath, error: &error) {
+            println("Error copyItemAtPath to \(destinationPath)")
+            println(error.debugDescription)
+            return nil
+        }
+        return destinationPath
+    }
 
     func fileNamesAtBundleResourcePath() -> [String] {
         // Returns list of all files in bundle resource path
