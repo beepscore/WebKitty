@@ -35,16 +35,16 @@ class ViewController: UIViewController {
         constrainWebView()
 
         //loadExample()
+
         //loadLocalFile("index", fileType: "html")
 
-        // duplicateSourceFilesToTempDir
-        var htmlPath = NSBundle.mainBundle().pathForResource("index", ofType: "html")
-        var htmlTempPath = FileUtils.duplicateSourceToTempDir(htmlPath)
+        var htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
+        var htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
 
-        var cssPath = NSBundle.mainBundle().pathForResource("style", ofType: "css")
-        var cssTempPath = FileUtils.duplicateSourceToTempDir(cssPath)
+        var cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
+        var cssTempUrl = FileUtils.duplicateFileToTempDir(cssUrl)
 
-        let request = NSURLRequest(URL: NSURL.fileURLWithPath(htmlTempPath!)!)
+        let request = NSURLRequest(URL: htmlTempUrl!)
         self.webView.loadRequest(request)
     }
 

@@ -13,34 +13,43 @@ import Foundation
 class FileUtils: NSObject {
 
     /** If source file exists at destination, replaces it.
-    return path to destination file
+    return destination file url
     return nil if method fails
     */
-    class func duplicateSourceToTempDir(filePath: String?) -> String? {
+    class func duplicateFileToTempDir(fileUrl: NSURL?) -> NSURL? {
         // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
-        
+
+        if fileUrl == nil {
+            return nil
+        }
+
         let fileMgr = NSFileManager.defaultManager()
-        let tmpPath = NSTemporaryDirectory().stringByAppendingPathComponent("www")
+        let tempPath = NSTemporaryDirectory()
+        let tempWwwUrl = NSURL.fileURLWithPath(tempPath)?.URLByAppendingPathComponent("www")
+
+        if tempWwwUrl == nil {
+            return nil
+        }
+        
         var error: NSError?
-        if !fileMgr.createDirectoryAtPath(tmpPath, withIntermediateDirectories: true,
+        if !fileMgr.createDirectoryAtURL(tempWwwUrl!, withIntermediateDirectories: true,
             attributes: nil, error: &error) {
-                println("Error createDirectoryAtPath at \(tmpPath)")
+                println("Error createDirectoryAtURL at \(tempWwwUrl)")
                 println(error.debugDescription)
                 return nil
         }
         
-        let destinationPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-        let destinationUrl = NSURL.fileURLWithPath(destinationPath)
+        let destinationUrl = tempWwwUrl!.URLByAppendingPathComponent(fileUrl!.lastPathComponent!)
         if (!deleteFileAtUrl(destinationUrl)) {
             return nil
         }
         
-        if !fileMgr.copyItemAtPath(filePath!, toPath: destinationPath, error: &error) {
-            println("Error copyItemAtPath to \(destinationPath)")
+        if !fileMgr.copyItemAtURL(fileUrl!, toURL: destinationUrl, error: &error) {
+            println("Error copyItemAtURL to \(destinationUrl)")
             println(error.debugDescription)
             return nil
         }
-        return destinationPath
+        return destinationUrl
     }
 
     /** If file exists, deletes it.
