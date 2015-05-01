@@ -10,6 +10,7 @@
 		DE0B0F1D1AE89091009B3164 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B0F1C1AE89091009B3164 /* FileUtils.swift */; };
 		DE0B0F1E1AE89091009B3164 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B0F1C1AE89091009B3164 /* FileUtils.swift */; };
 		DE5C45141ABF5C01001BFE0C /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = DE5C45131ABF5C01001BFE0C /* style.css */; };
+		DEAC49281AF408AD00A66B05 /* WebScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAC49271AF408AD00A66B05 /* WebScriptMessageHandler.swift */; };
 		DEBDAC321ABB492600B294D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDAC311ABB492600B294D8 /* AppDelegate.swift */; };
 		DEBDAC341ABB492600B294D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDAC331ABB492600B294D8 /* ViewController.swift */; };
 		DEBDAC371ABB492700B294D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEBDAC351ABB492700B294D8 /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		DE0B0F1C1AE89091009B3164 /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		DE5C45131ABF5C01001BFE0C /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = webViewResources/style.css; sourceTree = "<group>"; };
+		DEAC49271AF408AD00A66B05 /* WebScriptMessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebScriptMessageHandler.swift; sourceTree = "<group>"; };
 		DEBDAC2C1ABB492500B294D8 /* WebKitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebKitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBDAC301ABB492600B294D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEBDAC311ABB492600B294D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				DECED1911ABF3CDC00F85D41 /* webViewResources */,
 				DEBDAC311ABB492600B294D8 /* AppDelegate.swift */,
 				DEBDAC331ABB492600B294D8 /* ViewController.swift */,
+				DEAC49271AF408AD00A66B05 /* WebScriptMessageHandler.swift */,
 				DE0B0F1C1AE89091009B3164 /* FileUtils.swift */,
 				DEBDAC351ABB492700B294D8 /* Main.storyboard */,
 				DEBDAC381ABB492700B294D8 /* Images.xcassets */,
@@ -238,6 +241,7 @@
 			files = (
 				DE0B0F1D1AE89091009B3164 /* FileUtils.swift in Sources */,
 				DEBDAC341ABB492600B294D8 /* ViewController.swift in Sources */,
+				DEAC49281AF408AD00A66B05 /* WebScriptMessageHandler.swift in Sources */,
 				DEBDAC321ABB492600B294D8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
