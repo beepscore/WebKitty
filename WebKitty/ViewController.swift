@@ -99,6 +99,7 @@ class ViewController: UIViewController {
     /**
     @param fileType may start with a period or not e.g. ".html" or "html"
     */
+    /*
     func loadLocalFile (fileName: String, fileType: String) {
         if let url = NSBundle.mainBundle().URLForResource(fileName, withExtension: fileType) {
             // currently WKWebView loadRequest can't load local file directly
@@ -114,7 +115,9 @@ class ViewController: UIViewController {
             println("url nil")
         }
     }
+    */
 
+    /*
     func loadFileAtUrlAndHandleError(url: NSURL) {
         // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
         var error : NSError?
@@ -131,6 +134,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    */
 
 }
 
