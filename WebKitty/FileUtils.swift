@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Beepscore LLC. All rights reserved.
 //
 //  In general, Apple recommends references files via NSURL instead of NSString path.
-//  For more info see Apple NSFileManager  and NSURL class references.
+//  For more info see Apple NSFileManager and NSURL class references.
 
 import Foundation
 
