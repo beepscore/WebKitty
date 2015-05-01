@@ -21,8 +21,6 @@ class ViewController: UIViewController {
         println("viewDidLoad")
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.blueColor()
-
         configureWebView()
         constrainWebView()
 
