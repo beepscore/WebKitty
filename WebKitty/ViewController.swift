@@ -42,8 +42,15 @@ class ViewController: UIViewController {
 
     func configureWebView() {
 
-        // inject javascript into webView
         // http://nshipster.com/wkwebkit/
+
+        let userContentController = WKUserContentController()
+
+        // Communicate from app to web page
+        // addUserScript can temporarily inject javascript
+        // from native Swift app into any web page in the WKWebView
+        // App can use this to customize any web page!
+
         // set page background color
         // this overrides setting in style.css
         let paleBlueColor = "\"#CCF\""
@@ -51,8 +58,15 @@ class ViewController: UIViewController {
         let userScript = WKUserScript(source: javascriptSource,
             injectionTime: .AtDocumentEnd,
             forMainFrameOnly: true)
-        let userContentController = WKUserContentController()
         userContentController.addUserScript(userScript)
+
+        // Communicate from web page to app
+        // Register handler to get messages from WKWebView javascript into native Swift app.
+        // To send message, web page javascript must contain corresponding postMessage statement.
+        // NOTE: Could use addUserScript to temporarily inject a postMessage command into anyones web page.
+        let webScriptMessageHandler = WebScriptMessageHandler()
+        userContentController.addScriptMessageHandler(webScriptMessageHandler,
+            name: "notification")
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = userContentController
