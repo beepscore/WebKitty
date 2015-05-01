@@ -23,15 +23,7 @@ class ViewController: UIViewController {
 
         view.backgroundColor = UIColor.blueColor()
 
-        // let configuration = WKWebViewConfiguration()
-        // webView = WKWebView(frame:view.frame, configuration:configuration)
-        // init with default configuration
-        webView = WKWebView(frame:view.frame)
-        webView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        webView.backgroundColor = UIColor.yellowColor()
-        webView.scrollView.backgroundColor = UIColor.redColor()
-        view.addSubview(webView);
-
+        configureWebView()
         constrainWebView()
 
         //loadExample()
@@ -48,6 +40,17 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         println("viewDidLayoutSubviews")
+    }
+
+    func configureWebView() {
+        // let configuration = WKWebViewConfiguration()
+        // webView = WKWebView(frame:view.frame, configuration:configuration)
+        // init with default configuration
+        webView = WKWebView(frame:view.frame)
+        webView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        webView.backgroundColor = UIColor.yellowColor()
+        webView.scrollView.backgroundColor = UIColor.redColor()
+        view.addSubview(webView);
     }
 
     func constrainWebView() {
