@@ -5,12 +5,14 @@
 //  Created by Steve Baker on 4/22/15.
 //  Copyright (c) 2015 Beepscore LLC. All rights reserved.
 //
+//  In general, Apple recommends references files via NSURL instead of NSString path.
+//  For more info see Apple NSFileManager  and NSURL class references.
 
 import Foundation
 
 class FileUtils: NSObject {
 
-    /**  If source file exists at destination, replaces it.
+    /** If source file exists at destination, replaces it.
     return path to destination file
     return nil if method fails
     */
@@ -28,7 +30,8 @@ class FileUtils: NSObject {
         }
         
         let destinationPath = tmpPath.stringByAppendingPathComponent(filePath!.lastPathComponent)
-        if (!deleteFileAtPath(destinationPath)) {
+        let destinationUrl = NSURL.fileURLWithPath(destinationPath)
+        if (!deleteFileAtUrl(destinationUrl)) {
             return nil
         }
         
@@ -40,34 +43,39 @@ class FileUtils: NSObject {
         return destinationPath
     }
 
-    /**  If file exists, deletes it.
-    return true if file path was nil or file didn't exist or file was deleted
+    /** If file exists, deletes it.
+    return true if fileUrl was nil or file didn't exist or file was deleted
     return false if file existed but couldn't delete it
     */
-    class func deleteFileAtPath(filePath : String?) -> Bool {
-        let fileMgr = NSFileManager()
+    class func deleteFileAtUrl(fileUrl : NSURL?) -> Bool {
+        let fileMgr = NSFileManager.defaultManager()
         
-        if let path = filePath {
-            if fileMgr.fileExistsAtPath(path) {
-                var error: NSError?
-                if (!fileMgr.removeItemAtPath(path, error: &error)) {
-                    println("Error removeItemAtPath at \(path)")
-                    println(error.debugDescription)
-                    return false
+        if let url = fileUrl {
+            if let path = url.path {
+                if fileMgr.fileExistsAtPath(path) {
+                    var error: NSError?
+                    if (!fileMgr.removeItemAtURL(url, error: &error)) {
+                        println("Error removeItemAtURL at \(url)")
+                        println(error.debugDescription)
+                        return false
+                    } else {
+                        // deleted file
+                        return true
+                    }
                 } else {
-                    // deleted file
+                    // file doesn't exist
                     return true
                 }
             } else {
-                // file doesn't exist
+                // url.path nil
                 return true
             }
         } else {
-            // filePath nil
+            // fileURL nil
             return true
         }
     }
-    
+
     func fileNamesAtBundleResourcePath() -> [String] {
         // Returns list of all files in bundle resource path
         // NOTE:
