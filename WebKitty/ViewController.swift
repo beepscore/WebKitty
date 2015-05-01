@@ -47,23 +47,31 @@ class ViewController: UIViewController {
         let userContentController = WKUserContentController()
 
         // Communicate from app to web page
-        // addUserScript can temporarily inject javascript
+        // addUserScript can dynamically inject javascript
         // from native Swift app into any web page in the WKWebView
         // App can use this to customize any web page!
 
-        // set page background color
+        // inject javascript to set web page background color
         // this overrides setting in style.css
         let paleBlueColor = "\"#CCF\""
-        let javascriptSource = "document.body.style.background = \(paleBlueColor);"
-        let userScript = WKUserScript(source: javascriptSource,
+        let colorScriptSource = "document.body.style.background = \(paleBlueColor);"
+        let colorScript = WKUserScript(source: colorScriptSource,
             injectionTime: .AtDocumentEnd,
             forMainFrameOnly: true)
-        userContentController.addUserScript(userScript)
+        userContentController.addUserScript(colorScript)
+
+        // inject javascript so web page will send message to app
+        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"foo\"});"
+        let messageScript = WKUserScript(source: messageScriptSource,
+            injectionTime: .AtDocumentEnd,
+            forMainFrameOnly: true)
+        userContentController.addUserScript(messageScript)
 
         // Communicate from web page to app
         // Register handler to get messages from WKWebView javascript into native Swift app.
         // To send message, web page javascript must contain corresponding postMessage statement.
-        // NOTE: Could use addUserScript to temporarily inject a postMessage command into anyones web page.
+        // Web page author can write postMessage statements for use by WKWebView
+        // Alternatively, app can use addUserScript to inject postMessage statements into any web page.
         let webScriptMessageHandler = WebScriptMessageHandler()
         userContentController.addScriptMessageHandler(webScriptMessageHandler,
             name: "notification")
