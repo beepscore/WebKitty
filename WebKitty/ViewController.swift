@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var webView: WKWebView!
 
     override func viewDidLoad() {
-        NSLog("viewDidLoad")
+        println("viewDidLoad")
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.blueColor()
@@ -51,13 +51,12 @@ class ViewController: UIViewController {
     // viewDidLayoutSubviews gets called upon rotation
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        NSLog("viewDidLayoutSubviews")
+        println("viewDidLayoutSubviews")
     }
 
     func constrainWebView() {
         // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
 
-        //let viewDict: [NSObject : AnyObject] = ["view": view, "webView": webView]
         let viewDict = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
 
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[webView]|",
@@ -72,17 +71,6 @@ class ViewController: UIViewController {
             views: viewDict)
         NSLayoutConstraint.activateConstraints(verticalConstraints)
 
-        // when set active the constraint is added to the parent view constraints()
-        // however the argument order for parameters item and toItem does affect the constraint description
-//        let topConstraint = NSLayoutConstraint(item:webView,
-//            attribute:NSLayoutAttribute.Top,
-//            relatedBy:NSLayoutRelation.Equal,
-//            toItem:view,
-//            attribute:NSLayoutAttribute.Top,
-//            multiplier: 1.0,
-//            constant: 0.0)
-//        topConstraint.active = true
-
         printConstraints()
     }
 
@@ -95,7 +83,7 @@ class ViewController: UIViewController {
         println("webView.constraints().count \(webView.constraints().count)")
         println("")
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -126,10 +114,10 @@ class ViewController: UIViewController {
                 loadFileAtPathAndHandleError(path, url: url)
 
             } else {
-                NSLog("url nil")
+                println("url nil")
             }
         } else {
-            NSLog("path nil")
+            println("path nil")
         }
     }
 
@@ -141,12 +129,12 @@ class ViewController: UIViewController {
             encoding: NSUTF8StringEncoding,
             error: &error)
         if let actualError = error {
-            NSLog("error : \(actualError)")
+            println("error : \(actualError)")
         } else {
             if let actualFileString = fileString {
                 webView.loadHTMLString(actualFileString, baseURL: url)
             } else {
-                NSLog("fileString nil")
+                println("fileString nil")
             }
         }
     }
