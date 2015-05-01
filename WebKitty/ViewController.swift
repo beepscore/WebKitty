@@ -41,16 +41,33 @@ class ViewController: UIViewController {
     }
 
     func configureWebView() {
-        // let configuration = WKWebViewConfiguration()
-        // webView = WKWebView(frame:view.frame, configuration:configuration)
-        // init with default configuration
-        webView = WKWebView(frame:view.frame)
+
+        // inject javascript into webView
+        // http://nshipster.com/wkwebkit/
+        // set page background color
+        // this overrides setting in style.css
+        let paleBlueColor = "\"#CCF\""
+        let javascriptSource = "document.body.style.background = \(paleBlueColor);"
+        let userScript = WKUserScript(source: javascriptSource,
+            injectionTime: .AtDocumentEnd,
+            forMainFrameOnly: true)
+        let userContentController = WKUserContentController()
+        userContentController.addUserScript(userScript)
+
+        let configuration = WKWebViewConfiguration()
+        configuration.userContentController = userContentController
+        
+        webView = WKWebView(frame: self.view.bounds, configuration: configuration)
+        
         webView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        // on device to see webView background pinch view to zoom out
         webView.backgroundColor = UIColor.yellowColor()
         webView.scrollView.backgroundColor = UIColor.redColor()
+        
         view.addSubview(webView);
     }
-
+    
     func constrainWebView() {
         // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
 
