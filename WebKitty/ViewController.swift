@@ -83,14 +83,17 @@ class ViewController: UIViewController {
 //            constant: 0.0)
 //        topConstraint.active = true
 
-        logConstraints()
+        printConstraints()
     }
 
-    func logConstraints() {
-        NSLog("%d view.constraints() %@", view.constraints().count, view.constraints().debugDescription)
-        NSLog("")
-        NSLog("%d webView.constraints() %@", webView.constraints().count, webView.constraints().debugDescription)
-        NSLog("")
+    func printConstraints() {
+        println("view.constraints().count \(view.constraints().count)")
+        for constraint in view.constraints() {
+            println("\(constraint.debugDescription)")
+        }
+        println("")
+        println("webView.constraints().count \(webView.constraints().count)")
+        println("")
     }
     
     override func didReceiveMemoryWarning() {
