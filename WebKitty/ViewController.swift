@@ -100,32 +100,25 @@ class ViewController: UIViewController {
     @param fileType may start with a period or not e.g. ".html" or "html"
     */
     func loadLocalFile (fileName: String, fileType: String) {
-        if let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType) {
+        if let url = NSBundle.mainBundle().URLForResource(fileName, withExtension: fileType) {
+            // currently WKWebView loadRequest can't load local file directly
+            // error Could not create a sandbox extension for '/'
+            // let request = NSURLRequest(URL:url)
+            // webView.loadRequest(request!)
             
-            if let url = NSURL(fileURLWithPath:path) {
-                // currently WKWebView loadRequest can't load local file directly
-                // error Could not create a sandbox extension for '/'
-                // let request = NSURLRequest(URL:url)
-                // webView.loadRequest(request!)
-                
-                // workaround: use loadHTMLString instead of loadRequest
-                // http://stackoverflow.com/questions/27803341/swift-wkwebview-loading-local-file-not-working-on-a-device
-                // index.html references index.css but unfortunatley webView doesn't find or use index.css
-                loadFileAtPathAndHandleError(path, url: url)
-
-            } else {
-                println("url nil")
-            }
+            // workaround: use loadHTMLString instead of loadRequest
+            // http://stackoverflow.com/questions/27803341/swift-wkwebview-loading-local-file-not-working-on-a-device
+            // index.html references index.css but unfortunately webView doesn't find or use index.css
+            loadFileAtUrlAndHandleError(url)
         } else {
-            println("path nil")
+            println("url nil")
         }
     }
 
-    func loadFileAtPathAndHandleError(path: String, url: NSURL) {
-
+    func loadFileAtUrlAndHandleError(url: NSURL) {
         // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
         var error : NSError?
-        var fileString = String(contentsOfFile: path,
+        var fileString = String(contentsOfURL:url,
             encoding: NSUTF8StringEncoding,
             error: &error)
         if let actualError = error {
