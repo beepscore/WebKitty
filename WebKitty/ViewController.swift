@@ -38,14 +38,10 @@ class ViewController: UIViewController {
 
         //loadLocalFile("index", fileType: "html")
 
-        var htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
-        var htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
-
-        var cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
-        var cssTempUrl = FileUtils.duplicateFileToTempDir(cssUrl)
-
-        let request = NSURLRequest(URL: htmlTempUrl!)
-        self.webView.loadRequest(request)
+        if let htmlTempUrl = duplicateFilesToTempDir() {
+            let request = NSURLRequest(URL: htmlTempUrl)
+            self.webView.loadRequest(request)
+        }
     }
 
     // viewDidLayoutSubviews gets called upon rotation
@@ -82,6 +78,15 @@ class ViewController: UIViewController {
         println("")
         println("webView.constraints().count \(webView.constraints().count)")
         println("")
+    }
+
+    func duplicateFilesToTempDir() -> NSURL? {
+        var cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
+        var cssTempUrl = FileUtils.duplicateFileToTempDir(cssUrl)
+
+        var htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
+        var htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
+        return htmlTempUrl
     }
 
     override func didReceiveMemoryWarning() {
