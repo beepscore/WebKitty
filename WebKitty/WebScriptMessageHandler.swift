@@ -13,7 +13,7 @@ class WebScriptMessageHandler: NSObject, WKScriptMessageHandler {
     // MARK: WKScriptMessageHandler protocol
     func userContentController(userContentController: WKUserContentController,
         didReceiveScriptMessage message: WKScriptMessage) {
-            println(message.body)
+            print(message.body)
     }
     
 }

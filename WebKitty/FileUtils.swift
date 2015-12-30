@@ -12,41 +12,35 @@ import Foundation
 
 class FileUtils: NSObject {
 
-    /** If source file exists at destination, replaces it.
-    return destination file url
-    return nil if method fails
-    */
+    /**
+     * If source file exists at destination, replaces it.
+     * http://stackoverflow.com/questions/24097826/read-and-write-data-from-text-file
+     */
     class func duplicateFileToTempDir(fileUrl: NSURL?) -> NSURL? {
-        // http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4?lq=1
-
+        
         if fileUrl == nil {
             return nil
         }
-
+        
         let fileMgr = NSFileManager.defaultManager()
         let tempPath = NSTemporaryDirectory()
-        let tempWwwUrl = NSURL.fileURLWithPath(tempPath)?.URLByAppendingPathComponent("www")
-
-        if tempWwwUrl == nil {
+        let tempWwwUrl = NSURL.fileURLWithPath(tempPath).URLByAppendingPathComponent("www")
+        do {
+            try fileMgr.createDirectoryAtURL(tempWwwUrl, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            print("Error createDirectoryAtURL at \(tempWwwUrl)")
+            print(error.debugDescription)
             return nil
         }
         
-        var error: NSError?
-        if !fileMgr.createDirectoryAtURL(tempWwwUrl!, withIntermediateDirectories: true,
-            attributes: nil, error: &error) {
-                println("Error createDirectoryAtURL at \(tempWwwUrl)")
-                println(error.debugDescription)
-                return nil
-        }
+        let pathComponent = fileUrl!.lastPathComponent
+        let destinationUrl = tempWwwUrl.URLByAppendingPathComponent(pathComponent!)
+        deleteFileAtUrl(destinationUrl)
         
-        let destinationUrl = tempWwwUrl!.URLByAppendingPathComponent(fileUrl!.lastPathComponent!)
-        if (!deleteFileAtUrl(destinationUrl)) {
-            return nil
-        }
-        
-        if !fileMgr.copyItemAtURL(fileUrl!, toURL: destinationUrl, error: &error) {
-            println("Error copyItemAtURL to \(destinationUrl)")
-            println(error.debugDescription)
+        do {
+            try fileMgr.copyItemAtURL(fileUrl!, toURL: destinationUrl)
+        } catch let error as NSError {
+            print("copyItemAtURL error \(error.localizedDescription)")
             return nil
         }
         return destinationUrl
@@ -62,15 +56,16 @@ class FileUtils: NSObject {
         if let url = fileUrl {
             if let path = url.path {
                 if fileMgr.fileExistsAtPath(path) {
-                    var error: NSError?
-                    if (!fileMgr.removeItemAtURL(url, error: &error)) {
-                        println("Error removeItemAtURL at \(url)")
-                        println(error.debugDescription)
-                        return false
-                    } else {
-                        // deleted file
+                    
+                    do {
+                        try fileMgr.removeItemAtURL(url)
                         return true
+                    } catch let error as NSError {
+                        print("Error removeItemAtURL at \(url)")
+                        print(error.debugDescription)
+                        return false
                     }
+                    
                 } else {
                     // file doesn't exist
                     return true
@@ -130,7 +125,9 @@ class FileUtils: NSObject {
         
         var lastPathComponents : [String] = []
         if let enumerator = fileManager.enumeratorAtURL(resourceURL!,
-            includingPropertiesForKeys: nil, options: nil, errorHandler: nil) {
+            includingPropertiesForKeys: nil,
+            options: .SkipsSubdirectoryDescendants,
+            errorHandler: nil) {
                 
                 for element in enumerator.allObjects {
                     lastPathComponents.append(element.lastPathComponent)
@@ -142,12 +139,11 @@ class FileUtils: NSObject {
     func fileNamesWithExtensionHtml() -> [String] {
         
         let bundle = NSBundle.mainBundle()
-        let resourcePath = bundle.resourcePath
         let urls = bundle.URLsForResourcesWithExtension("html", subdirectory: "")
         
         var lastPathComponents : [String] = []
         for url in urls! {
-            lastPathComponents.append(url.lastPathComponent)
+            lastPathComponents.append(url.lastPathComponent!)
         }
         return lastPathComponents
     }

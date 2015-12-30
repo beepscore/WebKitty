@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var webView: WKWebView!
 
     override func viewDidLoad() {
-        println("viewDidLoad")
+        print("viewDidLoad")
         super.viewDidLoad()
 
         configureWebView()
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     // viewDidLayoutSubviews gets called upon rotation
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        println("viewDidLayoutSubviews")
+        print("viewDidLayoutSubviews")
     }
 
     func configureWebView() {
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
         
         webView = WKWebView(frame: self.view.bounds, configuration: configuration)
         
-        webView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        webView.translatesAutoresizingMaskIntoConstraints = false
         
         // on device to see webView background pinch view to zoom out
         webView.backgroundColor = UIColor.yellowColor()
@@ -96,13 +96,13 @@ class ViewController: UIViewController {
         let viewDict = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
 
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[webView]|",
-            options: NSLayoutFormatOptions(0),
+            options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: viewDict)
         NSLayoutConstraint.activateConstraints(horizontalConstraints)
 
         let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[webView]|",
-            options: NSLayoutFormatOptions(0),
+            options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: viewDict)
         NSLayoutConstraint.activateConstraints(verticalConstraints)
@@ -111,21 +111,21 @@ class ViewController: UIViewController {
     }
 
     func printConstraints() {
-        println("view.constraints().count \(view.constraints().count)")
-        for constraint in view.constraints() {
-            println("\(constraint.debugDescription)")
+        print("view.constraints().count \(view.constraints.count)")
+        for constraint in view.constraints {
+            print("\(constraint.debugDescription)")
         }
-        println("")
-        println("webView.constraints().count \(webView.constraints().count)")
-        println("")
+        print("")
+        print("webView.constraints().count \(webView.constraints.count)")
+        print("")
     }
 
     func duplicateFilesToTempDir() -> NSURL? {
-        var cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
-        var cssTempUrl = FileUtils.duplicateFileToTempDir(cssUrl)
+        let cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
+        FileUtils.duplicateFileToTempDir(cssUrl)
 
-        var htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
-        var htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
+        let htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
+        let htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
         return htmlTempUrl
     }
 
