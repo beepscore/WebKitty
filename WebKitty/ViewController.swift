@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         userContentController.addUserScript(colorScript)
 
         // inject javascript so web page will send message to app
-        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"foo\"});"
+        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
         let messageScript = WKUserScript(source: messageScriptSource,
             injectionTime: .AtDocumentEnd,
             forMainFrameOnly: true)
