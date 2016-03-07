@@ -11,7 +11,7 @@ import WebKit
 
 class ViewController: UIViewController {
 
-    // ! implies variables are optional, implicitly unwrapped
+    // ! implies variable is optional, force unwrapped
     // app will crash if they aren't set before use
     // changing type from UIWebView to WKWebView affects layout result!!
     // @IBOutlet var webView: UIWebView!
