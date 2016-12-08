@@ -10,22 +10,12 @@ import XCTest
 
 class FileUtilsTests: XCTestCase {
 
-    var fileUtils: FileUtils?
+    // swift will initialize this instance variable for each test, don't need separate "setUp" method
+    let fileUtils = FileUtils()
 
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        fileUtils = FileUtils()
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testFileNamesAtBundleResourcePath() {
         //let webViewResourcesSubdirectory = "webViewResources"
-        let actual = fileUtils!.fileNamesAtBundleResourcePath().count
+        let actual = fileUtils.fileNamesAtBundleResourcePath().count
         XCTAssertTrue(actual >= 109)
         XCTAssertTrue(actual <= 112)
     }
@@ -64,7 +54,7 @@ class FileUtilsTests: XCTestCase {
             "WebKitty"
         ])
 
-        let fileNames =  Set(fileUtils!.fileNamesAtURL())
+        let fileNames =  Set(fileUtils.fileNamesAtURL())
 
         // TODO: consider determine if test is running on device or simulator, then expect
         XCTAssertTrue(fileNames.count >= 10 && fileNames.count <= 12)
@@ -75,6 +65,6 @@ class FileUtilsTests: XCTestCase {
     func testFileNamesWithExtensionHtml() {
         let expected = ["index.html"]
         //let webViewResourcesSubdirectory = "webViewResources"
-        XCTAssertEqual(expected, fileUtils!.fileNamesWithExtensionHtml())
+        XCTAssertEqual(expected, fileUtils.fileNamesWithExtensionHtml())
     }
 }
