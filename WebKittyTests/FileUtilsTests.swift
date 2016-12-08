@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import WebKitty
 
 class FileUtilsTests: XCTestCase {
 
@@ -16,8 +17,15 @@ class FileUtilsTests: XCTestCase {
     func testFileNamesAtBundleResourcePath() {
         //let webViewResourcesSubdirectory = "webViewResources"
         let actual = fileUtils.fileNamesAtBundleResourcePath().count
-        XCTAssertTrue(actual >= 109)
-        XCTAssertTrue(actual <= 112)
+
+        // -D IOS_SIMULATOR defined in project build settings / custom flags / any iOS simulator / Debug
+        // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift#24869607
+        #if IOS_SIMULATOR
+            XCTAssertTrue(actual >= 107)
+            XCTAssertTrue(actual <= 110)
+        #else
+            XCTAssertEqual(actual, 112)
+        #endif
     }
 
     func testFileNamesAtURL() {
@@ -56,10 +64,12 @@ class FileUtilsTests: XCTestCase {
 
         let fileNames =  Set(fileUtils.fileNamesAtURL())
 
-        // TODO: consider determine if test is running on device or simulator, then expect
-        XCTAssertTrue(fileNames.count >= 10 && fileNames.count <= 12)
-        XCTAssertTrue((fileNames == expectedFileNamesSimulator)
-            || (fileNames == expectedFileNamesDevice))
+        #if IOS_SIMULATOR
+            XCTAssertTrue(fileNames == expectedFileNamesSimulator)
+        #else
+            XCTAssertTrue(fileNames == expectedFileNamesDevice)
+        #endif
+
     }
 
     func testFileNamesWithExtensionHtml() {
