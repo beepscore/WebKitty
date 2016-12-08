@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     func constrainWebView() {
         // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
 
-        let viewDict: [String: Any] = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
+        let viewDict: [String: UIView] = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
 
         let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
