@@ -126,12 +126,12 @@ class FileUtils: NSObject {
         
         var lastPathComponents : [String] = []
         if let enumerator = fileManager.enumerator(at: resourceURL!,
-            includingPropertiesForKeys: nil,
-            options: .skipsSubdirectoryDescendants,
-            errorHandler: nil) {
+                                                   includingPropertiesForKeys: nil,
+                                                   options: .skipsSubdirectoryDescendants,
+                                                   errorHandler: nil) {
                 
                 for element in enumerator.allObjects {
-                    lastPathComponents.append((element as AnyObject).lastPathComponent)
+                    lastPathComponents.append((element as! URL).lastPathComponent)
                 }
         }
         return lastPathComponents

@@ -30,9 +30,22 @@ class FileUtilsTests: XCTestCase {
     }
 
     func testFileNamesAtURL() {
-        let expected = 110
         //let webViewResourcesSubdirectory = "webViewResources"
-        XCTAssertEqual(expected, fileUtils!.fileNamesAtBundleResourcePath().count)
+        let expectedFileNames = [
+            "_CodeSignature",
+            "Base.lproj",
+            "Frameworks",
+            "index.html",
+            "Info.plist",
+            "libswiftRemoteMirror.dylib",
+            "PkgInfo",
+            "PlugIns",
+            "style.css",
+            "WebKitty"
+            ]
+        let fileNames =  fileUtils!.fileNamesAtURL()
+        XCTAssertEqual(fileNames.count, expectedFileNames.count)
+        XCTAssertEqual(fileNames, expectedFileNames)
     }
 
     func testFileNamesWithExtensionHtml() {
