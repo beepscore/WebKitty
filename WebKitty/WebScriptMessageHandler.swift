@@ -11,8 +11,8 @@ import WebKit
 class WebScriptMessageHandler: NSObject, WKScriptMessageHandler {
     
     // MARK: WKScriptMessageHandler protocol
-    func userContentController(userContentController: WKUserContentController,
-        didReceiveScriptMessage message: WKScriptMessage) {
+    func userContentController(_ userContentController: WKUserContentController,
+        didReceive message: WKScriptMessage) {
             print("WebScriptMessageHandler userContentController:didReceiveScriptMessage:")
             print(message.body)
     }

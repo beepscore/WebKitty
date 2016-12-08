@@ -29,8 +29,8 @@ class ViewController: UIViewController {
         //loadLocalFile("index", fileType: "html")
 
         if let htmlTempUrl = duplicateFilesToTempDir() {
-            let request = NSURLRequest(URL: htmlTempUrl)
-            self.webView.loadRequest(request)
+            let request = URLRequest(url: htmlTempUrl)
+            self.webView.load(request)
         }
     }
 
@@ -56,14 +56,14 @@ class ViewController: UIViewController {
         let paleBlueColor = "\"#CCF\""
         let colorScriptSource = "document.body.style.background = \(paleBlueColor);"
         let colorScript = WKUserScript(source: colorScriptSource,
-            injectionTime: .AtDocumentEnd,
+            injectionTime: .atDocumentEnd,
             forMainFrameOnly: true)
         userContentController.addUserScript(colorScript)
 
         // inject javascript so web page will send message to app
         let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
         let messageScript = WKUserScript(source: messageScriptSource,
-            injectionTime: .AtDocumentEnd,
+            injectionTime: .atDocumentEnd,
             forMainFrameOnly: true)
         userContentController.addUserScript(messageScript)
 
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         // Web page author can write postMessage statements for use by WKWebView
         // Alternatively, app can use addUserScript to inject postMessage statements into any web page.
         let webScriptMessageHandler = WebScriptMessageHandler()
-        userContentController.addScriptMessageHandler(webScriptMessageHandler,
+        userContentController.add(webScriptMessageHandler,
             name: "notification")
 
         let configuration = WKWebViewConfiguration()
@@ -84,8 +84,8 @@ class ViewController: UIViewController {
         webView.translatesAutoresizingMaskIntoConstraints = false
         
         // on device to see webView background pinch view to zoom out
-        webView.backgroundColor = UIColor.yellowColor()
-        webView.scrollView.backgroundColor = UIColor.redColor()
+        webView.backgroundColor = UIColor.yellow
+        webView.scrollView.backgroundColor = UIColor.red
         
         view.addSubview(webView);
     }
@@ -95,17 +95,17 @@ class ViewController: UIViewController {
 
         let viewDict = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
 
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[webView]|",
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: viewDict)
-        NSLayoutConstraint.activateConstraints(horizontalConstraints)
+        NSLayoutConstraint.activate(horizontalConstraints)
 
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[webView]|",
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|",
             options: NSLayoutFormatOptions(rawValue: 0),
             metrics: nil,
             views: viewDict)
-        NSLayoutConstraint.activateConstraints(verticalConstraints)
+        NSLayoutConstraint.activate(verticalConstraints)
 
         printConstraints()
     }
@@ -120,11 +120,11 @@ class ViewController: UIViewController {
         print("")
     }
 
-    func duplicateFilesToTempDir() -> NSURL? {
-        let cssUrl = NSBundle.mainBundle().URLForResource("style", withExtension: "css")
+    func duplicateFilesToTempDir() -> URL? {
+        let cssUrl = Bundle.main.url(forResource: "style", withExtension: "css")
         FileUtils.duplicateFileToTempDir(cssUrl)
 
-        let htmlUrl = NSBundle.mainBundle().URLForResource("index", withExtension: "html")
+        let htmlUrl = Bundle.main.url(forResource: "index", withExtension: "html")
         let htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
         return htmlTempUrl
     }

@@ -24,13 +24,13 @@ class FileUtilsTests: XCTestCase {
     }
     
     func testFileNamesAtBundleResourcePath() {
-        let expected = 25
+        let expected = 107
         let webViewResourcesSubdirectory = "webViewResources"
         XCTAssertEqual(expected, fileUtils!.fileNamesAtBundleResourcePath().count)
     }
 
     func testFileNamesAtURL() {
-        let expected = 25
+        let expected = 107
         let webViewResourcesSubdirectory = "webViewResources"
         XCTAssertEqual(expected, fileUtils!.fileNamesAtBundleResourcePath().count)
     }

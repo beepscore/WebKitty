@@ -16,17 +16,17 @@ class FileUtils: NSObject {
      * If source file exists at destination, replaces it.
      * http://stackoverflow.com/questions/24097826/read-and-write-data-from-text-file
      */
-    class func duplicateFileToTempDir(fileUrl: NSURL?) -> NSURL? {
+    class func duplicateFileToTempDir(_ fileUrl: URL?) -> URL? {
         
         if fileUrl == nil {
             return nil
         }
         
-        let fileMgr = NSFileManager.defaultManager()
+        let fileMgr = FileManager.default
         let tempPath = NSTemporaryDirectory()
-        let tempWwwUrl = NSURL.fileURLWithPath(tempPath).URLByAppendingPathComponent("www")
+        let tempWwwUrl = URL(fileURLWithPath: tempPath).appendingPathComponent("www")
         do {
-            try fileMgr.createDirectoryAtURL(tempWwwUrl, withIntermediateDirectories: true, attributes: nil)
+            try fileMgr.createDirectory(at: tempWwwUrl, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             print("Error createDirectoryAtURL at \(tempWwwUrl)")
             print(error.debugDescription)
@@ -34,11 +34,11 @@ class FileUtils: NSObject {
         }
         
         let pathComponent = fileUrl!.lastPathComponent
-        let destinationUrl = tempWwwUrl.URLByAppendingPathComponent(pathComponent!)
+        let destinationUrl = tempWwwUrl.appendingPathComponent(pathComponent)
         deleteFileAtUrl(destinationUrl)
         
         do {
-            try fileMgr.copyItemAtURL(fileUrl!, toURL: destinationUrl)
+            try fileMgr.copyItem(at: fileUrl!, to: destinationUrl)
         } catch let error as NSError {
             print("copyItemAtURL error \(error.localizedDescription)")
             return nil
@@ -50,28 +50,23 @@ class FileUtils: NSObject {
     return true if fileUrl was nil or file didn't exist or file was deleted
     return false if file existed but couldn't delete it
     */
-    class func deleteFileAtUrl(fileUrl : NSURL?) -> Bool {
-        let fileMgr = NSFileManager.defaultManager()
+    class func deleteFileAtUrl(_ fileUrl : URL?) -> Bool {
+        let fileMgr = FileManager.default
         
         if let url = fileUrl {
-            if let path = url.path {
-                if fileMgr.fileExistsAtPath(path) {
-                    
-                    do {
-                        try fileMgr.removeItemAtURL(url)
-                        return true
-                    } catch let error as NSError {
-                        print("Error removeItemAtURL at \(url)")
-                        print(error.debugDescription)
-                        return false
-                    }
-                    
-                } else {
-                    // file doesn't exist
+            if fileMgr.fileExists(atPath: url.path) {
+
+                do {
+                    try fileMgr.removeItem(at: url)
                     return true
+                } catch let error as NSError {
+                    print("Error removeItemAtURL at \(url)")
+                    print(error.debugDescription)
+                    return false
                 }
+
             } else {
-                // url.path nil
+                // file doesn't exist
                 return true
             }
         } else {
@@ -93,19 +88,19 @@ class FileUtils: NSObject {
 
         var fileNames : [String] = []
 
-        let bundle = NSBundle.mainBundle()
+        let bundle = Bundle.main
 
         // let bundlePath = bundle.bundlePath
         // let sourcePath = resourcePath!.stringByAppendingPathComponent(subpath!)
         let resourcePath = bundle.resourcePath
 
-        let fileManager = NSFileManager()
+        let fileManager = FileManager()
 
         // this returns empty
         // if let enumerator: NSDirectoryEnumerator = fileManager.enumeratorAtPath(sourcePath) {
 
         // this returns many files, could filter by file extension
-        if let enumerator: NSDirectoryEnumerator = fileManager.enumeratorAtPath(resourcePath!) {
+        if let enumerator: FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: resourcePath!) {
 
             for element in enumerator.allObjects {
                 fileNames.append(element as! String)
@@ -116,21 +111,21 @@ class FileUtils: NSObject {
 
     func fileNamesAtURL() -> [String] {
         
-        let bundle = NSBundle.mainBundle()
+        let bundle = Bundle.main
         
         let resourcePath = bundle.resourcePath
-        let resourceURL = NSURL.init(scheme:"file", host: "", path: resourcePath!)
+        let resourceURL = NSURL.init(scheme:"file", host: "", path: resourcePath!) as? URL
         
-        let fileManager = NSFileManager()
+        let fileManager = FileManager()
         
         var lastPathComponents : [String] = []
-        if let enumerator = fileManager.enumeratorAtURL(resourceURL!,
+        if let enumerator = fileManager.enumerator(at: resourceURL!,
             includingPropertiesForKeys: nil,
-            options: .SkipsSubdirectoryDescendants,
+            options: .skipsSubdirectoryDescendants,
             errorHandler: nil) {
                 
                 for element in enumerator.allObjects {
-                    lastPathComponents.append(element.lastPathComponent)
+                    lastPathComponents.append((element as AnyObject).lastPathComponent)
                 }
         }
         return lastPathComponents
@@ -138,12 +133,12 @@ class FileUtils: NSObject {
     
     func fileNamesWithExtensionHtml() -> [String] {
         
-        let bundle = NSBundle.mainBundle()
-        let urls = bundle.URLsForResourcesWithExtension("html", subdirectory: "")
+        let bundle = Bundle.main
+        let urls = bundle.urls(forResourcesWithExtension: "html", subdirectory: "")
         
         var lastPathComponents : [String] = []
         for url in urls! {
-            lastPathComponents.append(url.lastPathComponent!)
+            lastPathComponents.append(url.lastPathComponent)
         }
         return lastPathComponents
     }
