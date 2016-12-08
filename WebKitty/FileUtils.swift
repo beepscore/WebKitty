@@ -113,8 +113,11 @@ class FileUtils: NSObject {
         
         let bundle = Bundle.main
         
-        let resourcePath = bundle.resourcePath
-        let resourceURL = NSURL.init(scheme:"file", host: "", path: resourcePath!) as? URL
+        let urlComponents = NSURLComponents()
+        urlComponents.scheme = "file"
+        urlComponents.host = ""
+        urlComponents.path = bundle.resourcePath
+        let resourceURL = urlComponents.url
         
         let fileManager = FileManager()
         
