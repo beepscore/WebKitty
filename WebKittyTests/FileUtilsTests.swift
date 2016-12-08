@@ -24,14 +24,19 @@ class FileUtilsTests: XCTestCase {
     }
     
     func testFileNamesAtBundleResourcePath() {
-        let expected = 110
         //let webViewResourcesSubdirectory = "webViewResources"
-        XCTAssertEqual(expected, fileUtils!.fileNamesAtBundleResourcePath().count)
+        let actual = fileUtils!.fileNamesAtBundleResourcePath().count
+        XCTAssertTrue(actual >= 109)
+        XCTAssertTrue(actual <= 112)
     }
 
     func testFileNamesAtURL() {
+        // compare sets instead of arrays to make test independent of element order
+        // example
+        XCTAssertEqual(Set([1,2]), Set([2,1]))
+
         //let webViewResourcesSubdirectory = "webViewResources"
-        let expectedFileNames = [
+        let expectedFileNamesSimulator = Set([
             "_CodeSignature",
             "Base.lproj",
             "Frameworks",
@@ -42,10 +47,29 @@ class FileUtilsTests: XCTestCase {
             "PlugIns",
             "style.css",
             "WebKitty"
-            ]
-        let fileNames =  fileUtils!.fileNamesAtURL()
-        XCTAssertEqual(fileNames.count, expectedFileNames.count)
-        XCTAssertEqual(fileNames, expectedFileNames)
+            ])
+
+        let expectedFileNamesDevice = Set([
+            "_CodeSignature",
+            "Base.lproj",
+            "Frameworks",
+            "index.html",
+            "Info.plist",
+            "libswiftRemoteMirror.dylib",
+            "META-INF",
+            "embedded.mobileprovision",
+            "PkgInfo",
+            "PlugIns",
+            "style.css",
+            "WebKitty"
+        ])
+
+        let fileNames =  Set(fileUtils!.fileNamesAtURL())
+
+        // TODO: consider determine if test is running on device or simulator, then expect
+        XCTAssertTrue(fileNames.count >= 10 && fileNames.count <= 12)
+        XCTAssertTrue((fileNames == expectedFileNamesSimulator)
+            || (fileNames == expectedFileNamesDevice))
     }
 
     func testFileNamesWithExtensionHtml() {
