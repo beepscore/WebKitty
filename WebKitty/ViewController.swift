@@ -42,54 +42,60 @@ class ViewController: UIViewController {
 
     func configureWebView() {
 
-        // http://nshipster.com/wkwebkit/
-
         let userContentController = WKUserContentController()
 
-        // Communicate from app to web page
-        // addUserScript can dynamically inject javascript
-        // from native Swift app into any web page in the WKWebView
-        // App can use this to customize any web page!
+        // http://nshipster.com/wkwebkit/
 
-        // inject javascript to set web page background color
-        // this overrides setting in style.css
-        let paleBlueColor = "\"#CCF\""
-        let colorScriptSource = "document.body.style.background = \(paleBlueColor);"
-        let colorScript = WKUserScript(source: colorScriptSource,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true)
-        userContentController.addUserScript(colorScript)
+        // MARK: Communicate from app to web page
+        addUserScriptBackgroundColor(userContentController: userContentController)
 
-        // inject javascript so web page will send message to app
-        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
-        let messageScript = WKUserScript(source: messageScriptSource,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true)
-        userContentController.addUserScript(messageScript)
+        // MARK: Communicate from web page to app
+        // To send a message, web page must contain javascript with one or more calls to postMessage().
+        // Original web page author can write the javascript, or
+        // Swift app can use addUserScript to inject javascript into any web page.
+        addUserScriptMessage(userContentController: userContentController)
 
-        // Communicate from web page to app
         // Register handler to get messages from WKWebView javascript into native Swift app.
-        // To send message, web page javascript must contain corresponding postMessage statement.
-        // Web page author can write postMessage statements for use by WKWebView
-        // Alternatively, app can use addUserScript to inject postMessage statements into any web page.
         let webScriptMessageHandler = WebScriptMessageHandler()
-        userContentController.add(webScriptMessageHandler,
-            name: "notification")
+        userContentController.add(webScriptMessageHandler, name: "notification")
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = userContentController
-        
+
         webView = WKWebView(frame: self.view.bounds, configuration: configuration)
-        
         webView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         // on device to see webView background pinch view to zoom out
         webView.backgroundColor = UIColor.yellow
         webView.scrollView.backgroundColor = UIColor.red
-        
+
         view.addSubview(webView);
     }
-    
+
+    /** Add javascript with call to postMessage to web page so web page will send message to app
+     Dynamically injects javascript from native Swift app into web page in the WKWebView.
+     */
+    func addUserScriptMessage(userContentController: WKUserContentController) {
+        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
+        let messageScript = WKUserScript(source: messageScriptSource,
+                                         injectionTime: .atDocumentEnd,
+                                         forMainFrameOnly: true)
+        userContentController.addUserScript(messageScript)
+    }
+
+    /** Sets web page background color. This overrides setting in style.css
+     Dynamically injects javascript from native Swift app into web page in the WKWebView.
+     App can use addUserScript() to customize any web page!
+     */
+    func addUserScriptBackgroundColor(userContentController: WKUserContentController) {
+        let paleBlueColor = "\"#CCF\""
+        let colorScriptSource = "document.body.style.background = \(paleBlueColor);"
+        let colorScript = WKUserScript(source: colorScriptSource,
+                                       injectionTime: .atDocumentEnd,
+                                       forMainFrameOnly: true)
+        userContentController.addUserScript(colorScript)
+    }
+
     func constrainWebView() {
         // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
 
