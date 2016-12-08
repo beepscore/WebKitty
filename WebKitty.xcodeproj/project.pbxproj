@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DE0B0F1D1AE89091009B3164 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B0F1C1AE89091009B3164 /* FileUtils.swift */; };
-		DE0B0F1E1AE89091009B3164 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B0F1C1AE89091009B3164 /* FileUtils.swift */; };
 		DE5C45141ABF5C01001BFE0C /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = DE5C45131ABF5C01001BFE0C /* style.css */; };
 		DEAC49281AF408AD00A66B05 /* WebScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAC49271AF408AD00A66B05 /* WebScriptMessageHandler.swift */; };
 		DEBDAC321ABB492600B294D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBDAC311ABB492600B294D8 /* AppDelegate.swift */; };
@@ -254,7 +253,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE0B0F1E1AE89091009B3164 /* FileUtils.swift in Sources */,
 				DEBDAC481ABB492800B294D8 /* FileUtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
