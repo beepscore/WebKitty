@@ -35,7 +35,7 @@ class FileUtils: NSObject {
         
         let pathComponent = fileUrl!.lastPathComponent
         let destinationUrl = tempWwwUrl.appendingPathComponent(pathComponent)
-        deleteFileAtUrl(destinationUrl)
+        let _ = deleteFileAtUrl(destinationUrl)
         
         do {
             try fileMgr.copyItem(at: fileUrl!, to: destinationUrl)

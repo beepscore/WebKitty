@@ -122,7 +122,7 @@ class ViewController: UIViewController {
 
     func duplicateFilesToTempDir() -> URL? {
         let cssUrl = Bundle.main.url(forResource: "style", withExtension: "css")
-        FileUtils.duplicateFileToTempDir(cssUrl)
+        let _ = FileUtils.duplicateFileToTempDir(cssUrl)
 
         let htmlUrl = Bundle.main.url(forResource: "index", withExtension: "html")
         let htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
