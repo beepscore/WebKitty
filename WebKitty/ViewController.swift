@@ -44,16 +44,17 @@ class ViewController: UIViewController {
 
         let userContentController = WKUserContentController()
 
-        // http://nshipster.com/wkwebkit/
-
         // MARK: Communicate from app to web page
-        addUserScriptBackgroundColor(userContentController: userContentController)
+        // addUserScript() dynamically injects javascript from native Swift app into web page in the WKWebView.
+        // App can use addUserScript() to customize any web page!
+        // http://nshipster.com/wkwebkit/
+        userContentController.addUserScript(ViewController.userScriptBackgroundColor())
 
         // MARK: Communicate from web page to app
         // To send a message, web page must contain javascript with one or more calls to postMessage().
         // Original web page author can write the javascript, or
         // Swift app can use addUserScript to inject javascript into any web page.
-        addUserScriptMessage(userContentController: userContentController)
+        userContentController.addUserScript(ViewController.userScriptPostMessage())
 
         // Register handler to get messages from WKWebView javascript into native Swift app.
         let webScriptMessageHandler = WebScriptMessageHandler()
@@ -72,28 +73,29 @@ class ViewController: UIViewController {
         view.addSubview(webView);
     }
 
-    /** Add javascript with call to postMessage to web page so web page will send message to app
-     Dynamically injects javascript from native Swift app into web page in the WKWebView.
-     */
-    func addUserScriptMessage(userContentController: WKUserContentController) {
-        let messageScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
-        let messageScript = WKUserScript(source: messageScriptSource,
-                                         injectionTime: .atDocumentEnd,
-                                         forMainFrameOnly: true)
-        userContentController.addUserScript(messageScript)
+    /**
+    - returns: script to set web page background color. This overrides setting in style.css
+     Typically app calls userContentController.addUserScript(userScriptBackgroundColor())
+    */
+    class func userScriptBackgroundColor() -> WKUserScript {
+        let paleBlueColor = "\"#CCF\""
+        let userScriptSource = "document.body.style.background = \(paleBlueColor);"
+        let userScript = WKUserScript(source: userScriptSource,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true)
+        return userScript
     }
 
-    /** Sets web page background color. This overrides setting in style.css
-     Dynamically injects javascript from native Swift app into web page in the WKWebView.
-     App can use addUserScript() to customize any web page!
-     */
-    func addUserScriptBackgroundColor(userContentController: WKUserContentController) {
-        let paleBlueColor = "\"#CCF\""
-        let colorScriptSource = "document.body.style.background = \(paleBlueColor);"
-        let colorScript = WKUserScript(source: colorScriptSource,
-                                       injectionTime: .atDocumentEnd,
-                                       forMainFrameOnly: true)
-        userContentController.addUserScript(colorScript)
+    /**
+    - returns: script to call postMessage so web page will send message to app
+     Typically app calls userContentController.addUserScript(userScriptPostMessage())
+    */
+    class func userScriptPostMessage() -> WKUserScript {
+        let userScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
+        let userScript = WKUserScript(source: userScriptSource,
+                                         injectionTime: .atDocumentEnd,
+                                         forMainFrameOnly: true)
+        return userScript
     }
 
     func constrainWebView() {
