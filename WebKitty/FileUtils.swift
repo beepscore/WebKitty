@@ -112,13 +112,16 @@ class FileUtils: NSObject {
     func fileNamesAtURL() -> [String] {
         
         let bundle = Bundle.main
-        
-        let urlComponents = NSURLComponents()
+
+        guard let resourcePath = bundle.resourcePath else {
+            return []
+        }
+        var urlComponents = URLComponents()
         urlComponents.scheme = "file"
         urlComponents.host = ""
-        urlComponents.path = bundle.resourcePath
+        urlComponents.path = resourcePath
         let resourceURL = urlComponents.url
-        
+
         let fileManager = FileManager()
         
         var lastPathComponents : [String] = []
