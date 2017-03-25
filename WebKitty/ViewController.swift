@@ -142,14 +142,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
     func loadExample() {
         // http://stackoverflow.com/questions/24410473/how-to-convert-this-var-string-to-nsurl-in-swift?rq=1
-        let url = NSURL(string: "http://www.beepscore.com")
-        let request = NSURLRequest(URL:url!)
-        webView.loadRequest(request)
+        guard let url = URL(string: "http://www.beepscore.com") else { return }
+        let request = URLRequest(url:url)
+        webView.load(request)
     }
-    */
 
     /**
     @param fileType may start with a period or not e.g. ".html" or "html"
