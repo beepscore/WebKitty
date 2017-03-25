@@ -3,13 +3,17 @@ Practice using Apple WebKit and WKWebView
 
 # References
 
-## WKWebView  
-https://developer.apple.com/library/prerelease/ios/documentation/WebKit/Reference/WKWebView_Ref/index.html#//apple_ref/doc/uid/TP40014624-CH1-DontLinkElementID_41
+## WKWebView
+
+### Introducing Safari View Controller
+includes info about WKWebView loadFileUrl to load local files  
+https://developer.apple.com/videos/play/wwdc2015/504/
+
+http://stackoverflow.com/questions/24882834/wkwebview-not-loading-local-files-under-ios-8?rq=1
 
 http://nshipster.com/wkwebkit/
 
 http://www.joshuakehn.com/2014/10/29/using-javascript-with-wkwebview-in-ios-8.html
-
 
 https://tetontech.wordpress.com/2014/06/12/swift-hybrid-development/
 
