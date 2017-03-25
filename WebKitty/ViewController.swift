@@ -40,7 +40,39 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - view lifecycle
+    // MARK: - layout
+
+    func constrainWebView() {
+        // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
+
+        let viewDict: [String: UIView] = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
+
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|",
+                                                                   options: NSLayoutFormatOptions(rawValue: 0),
+                                                                   metrics: nil,
+                                                                   views: viewDict)
+        NSLayoutConstraint.activate(horizontalConstraints)
+
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|",
+                                                                 options: NSLayoutFormatOptions(rawValue: 0),
+                                                                 metrics: nil,
+                                                                 views: viewDict)
+        NSLayoutConstraint.activate(verticalConstraints)
+
+        printConstraints()
+    }
+    
+    func printConstraints() {
+        print("view.constraints().count \(view.constraints.count)")
+        for constraint in view.constraints {
+            print("\(constraint.debugDescription)")
+        }
+        print("")
+        print("webView.constraints().count \(webView.constraints.count)")
+        print("")
+    }
+
+    // MARK: - communicate between app and WKWebView
 
     /// adds user script to communicate from app to web page
     /// adds user script to communicate from web page to app
@@ -102,35 +134,7 @@ class ViewController: UIViewController {
         return userScript
     }
 
-    func constrainWebView() {
-        // http://code.tutsplus.com/tutorials/introduction-to-the-visual-format-language--cms-22715
-
-        let viewDict: [String: UIView] = Dictionary(dictionaryLiteral:("view", view), ("webView", webView))
-
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: viewDict)
-        NSLayoutConstraint.activate(horizontalConstraints)
-
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
-            metrics: nil,
-            views: viewDict)
-        NSLayoutConstraint.activate(verticalConstraints)
-
-        printConstraints()
-    }
-
-    func printConstraints() {
-        print("view.constraints().count \(view.constraints.count)")
-        for constraint in view.constraints {
-            print("\(constraint.debugDescription)")
-        }
-        print("")
-        print("webView.constraints().count \(webView.constraints.count)")
-        print("")
-    }
+    // MARK: - load urls into web page
 
     /// creates a request for a remote url and loads it
     func loadRequest() {
