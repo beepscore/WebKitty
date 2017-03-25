@@ -61,7 +61,7 @@ class ViewController: UIViewController {
 
         printConstraints()
     }
-    
+
     func printConstraints() {
         print("view.constraints().count \(view.constraints.count)")
         for constraint in view.constraints {
@@ -111,26 +111,26 @@ class ViewController: UIViewController {
 
     /**
      Typically app calls userContentController.addUserScript(userScriptBackgroundColor())
-    - returns: script to set web page background color. This overrides setting in style.css
-    */
+     - returns: script to set web page background color. This overrides setting in style.css
+     */
     class func userScriptBackgroundColor() -> WKUserScript {
         let paleBlueColor = "\"#CCF\""
         let userScriptSource = "document.body.style.background = \(paleBlueColor);"
         let userScript = WKUserScript(source: userScriptSource,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true)
+                                      injectionTime: .atDocumentEnd,
+                                      forMainFrameOnly: true)
         return userScript
     }
 
     /**
      Typically app calls userContentController.addUserScript(userScriptPostMessage())
-    - returns: script to call postMessage so web page will send message to app
-    */
+     - returns: script to call postMessage so web page will send message to app
+     */
     class func userScriptPostMessage() -> WKUserScript {
         let userScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
         let userScript = WKUserScript(source: userScriptSource,
-                                         injectionTime: .atDocumentEnd,
-                                         forMainFrameOnly: true)
+                                      injectionTime: .atDocumentEnd,
+                                      forMainFrameOnly: true)
         return userScript
     }
 
@@ -156,22 +156,22 @@ class ViewController: UIViewController {
         guard let url = Bundle.main.url(forResource: fileName,
                                         withExtension: fileType) else { return }
 
-//        guard let cssUrl = Bundle.main.url(forResource: "style",
-//                                           withExtension: "css") else { return }
+        // guard let cssUrl = Bundle.main.url(forResource: "style",
+        //                                  withExtension: "css") else { return }
 
-//        guard let cssUrl2 = Bundle.main.url(forResource: "style",
-//                                                  withExtension: "css",
-//                                                  subdirectory: nil) else { return }
+        // guard let cssUrl2 = Bundle.main.url(forResource: "style",
+        //                                   withExtension: "css",
+        //                                    subdirectory: nil) else { return }
 
         // get url for directory instead of for just one file
         // http://stackoverflow.com/questions/40692737/how-to-get-path-to-a-subfolder-in-main-bundle
         let resourcePath = Bundle.main.resourcePath
         let webResourcesDirUrl = URL(fileURLWithPath:resourcePath!)
             .appendingPathComponent("webResources")
-
+        
         // http://stackoverflow.com/questions/24882834/wkwebview-not-loading-local-files-under-ios-8?rq=1
         webView.loadFileURL(url, allowingReadAccessTo: webResourcesDirUrl)
     }
-
+    
 }
 
