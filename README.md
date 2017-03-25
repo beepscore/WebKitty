@@ -25,9 +25,5 @@ http://stackoverflow.com/questions/25868204/passing-data-to-a-webview-in-ios-8
 
 http://www.kinderas.com/technology/2014/6/7/getting-started-with-wkwebview-using-swift-in-ios-8
 
-## WKWebView can't access local resource files  
-As a workaround, can copy them to temp directory  
-http://stackoverflow.com/questions/24882834/wkwebview-not-working-in-ios-8-beta-4
-
 # Results
 
