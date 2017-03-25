@@ -72,8 +72,8 @@ class ViewController: UIViewController {
     }
 
     /**
-    - returns: script to set web page background color. This overrides setting in style.css
      Typically app calls userContentController.addUserScript(userScriptBackgroundColor())
+    - returns: script to set web page background color. This overrides setting in style.css
     */
     class func userScriptBackgroundColor() -> WKUserScript {
         let paleBlueColor = "\"#CCF\""
@@ -85,8 +85,8 @@ class ViewController: UIViewController {
     }
 
     /**
-    - returns: script to call postMessage so web page will send message to app
      Typically app calls userContentController.addUserScript(userScriptPostMessage())
+    - returns: script to call postMessage so web page will send message to app
     */
     class func userScriptPostMessage() -> WKUserScript {
         let userScriptSource = "window.webkit.messageHandlers.notification.postMessage({body: \"Hi from javascript\"});"
