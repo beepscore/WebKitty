@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     // app will crash if they aren't set before use
     var webView: WKWebView!
 
+    // MARK: - view lifecycle
+
     override func viewDidLoad() {
         print("viewDidLoad")
         super.viewDidLoad()
@@ -33,6 +35,15 @@ class ViewController: UIViewController {
         print("viewDidLayoutSubviews")
     }
 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: - view lifecycle
+
+    /// adds user script to communicate from app to web page
+    /// adds user script to communicate from web page to app
     func configureWebView() {
 
         let userContentController = WKUserContentController()
@@ -119,11 +130,6 @@ class ViewController: UIViewController {
         print("")
         print("webView.constraints().count \(webView.constraints.count)")
         print("")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     /// creates a request for a remote url and loads it
