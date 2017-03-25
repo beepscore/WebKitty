@@ -24,12 +24,7 @@ class ViewController: UIViewController {
 
         //loadExample()
 
-        //loadLocalFile("index", fileType: "html")
-
-        if let htmlTempUrl = duplicateFilesToTempDir() {
-            let request = URLRequest(url: htmlTempUrl)
-            self.webView.load(request)
-        }
+        loadLocalFile(fileName: "index", fileType: "html")
     }
 
     // viewDidLayoutSubviews gets called upon rotation
@@ -126,15 +121,6 @@ class ViewController: UIViewController {
         print("")
     }
 
-    func duplicateFilesToTempDir() -> URL? {
-        let cssUrl = Bundle.main.url(forResource: "style", withExtension: "css")
-        let _ = FileUtils.duplicateFileToTempDir(cssUrl)
-
-        let htmlUrl = Bundle.main.url(forResource: "index", withExtension: "html")
-        let htmlTempUrl = FileUtils.duplicateFileToTempDir(htmlUrl)
-        return htmlTempUrl
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -147,45 +133,34 @@ class ViewController: UIViewController {
         webView.load(request)
     }
 
-    /**
-    @param fileType may start with a period or not e.g. ".html" or "html"
-    */
-    /*
+    /// Loads local file from main bundle using loadFileURL
+    /// Note: In iOS 8 WKWebView loadRequest couldn't load a local file directly,
+    /// had to use webView.loadHTMLString.
+    ///
+    /// - Parameters:
+    ///   - fileName: file name to load, e.g. "index"
+    ///   - fileType: may start with a period or not e.g. ".html" or "html"
     func loadLocalFile (fileName: String, fileType: String) {
-        if let url = NSBundle.mainBundle().URLForResource(fileName, withExtension: fileType) {
-            // currently WKWebView loadRequest can't load local file directly
-            // error Could not create a sandbox extension for '/'
-            // let request = NSURLRequest(URL:url)
-            // webView.loadRequest(request!)
-            
-            // workaround: use loadHTMLString instead of loadRequest
-            // http://stackoverflow.com/questions/27803341/swift-wkwebview-loading-local-file-not-working-on-a-device
-            // index.html references index.css but unfortunately webView doesn't find or use index.css
-            loadFileAtUrlAndHandleError(url)
-        } else {
-            println("url nil")
-        }
-    }
-    */
 
-    /*
-    func loadFileAtUrlAndHandleError(url: NSURL) {
-        // http://stackoverflow.com/questions/24176383/swift-programming-nserrorpointer-error-etc
-        var error : NSError?
-        var fileString = String(contentsOfURL:url,
-            encoding: NSUTF8StringEncoding,
-            error: &error)
-        if let actualError = error {
-            println("error : \(actualError)")
-        } else {
-            if let actualFileString = fileString {
-                webView.loadHTMLString(actualFileString, baseURL: url)
-            } else {
-                println("fileString nil")
-            }
-        }
+        guard let url = Bundle.main.url(forResource: fileName,
+                                        withExtension: fileType) else { return }
+
+//        guard let cssUrl = Bundle.main.url(forResource: "style",
+//                                           withExtension: "css") else { return }
+
+//        guard let cssUrl2 = Bundle.main.url(forResource: "style",
+//                                                  withExtension: "css",
+//                                                  subdirectory: nil) else { return }
+
+        // get url for directory instead of for just one file
+        // http://stackoverflow.com/questions/40692737/how-to-get-path-to-a-subfolder-in-main-bundle
+        let resourcePath = Bundle.main.resourcePath
+        let webResourcesDirUrl = URL(fileURLWithPath:resourcePath!)
+            .appendingPathComponent("webResources")
+
+        // http://stackoverflow.com/questions/24882834/wkwebview-not-loading-local-files-under-ios-8?rq=1
+        webView.loadFileURL(url, allowingReadAccessTo: webResourcesDirUrl)
     }
-    */
 
 }
 
