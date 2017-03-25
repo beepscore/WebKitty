@@ -165,8 +165,9 @@ class ViewController: UIViewController {
 
         // get url for directory instead of for just one file
         // http://stackoverflow.com/questions/40692737/how-to-get-path-to-a-subfolder-in-main-bundle
-        let resourcePath = Bundle.main.resourcePath
-        let webResourcesDirUrl = URL(fileURLWithPath:resourcePath!)
+        guard let resourcePath = Bundle.main.resourcePath else { return }
+        
+        let webResourcesDirUrl = URL(fileURLWithPath:resourcePath)
             .appendingPathComponent("webResources")
         
         // http://stackoverflow.com/questions/24882834/wkwebview-not-loading-local-files-under-ios-8?rq=1
