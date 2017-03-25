@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         configureWebView()
         constrainWebView()
 
-        //loadExample()
+        //loadRequest()
 
         loadLocalFile(fileName: "index", fileType: "html")
     }
@@ -126,7 +126,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func loadExample() {
+    /// creates a request for a remote url and loads it
+    func loadRequest() {
         // http://stackoverflow.com/questions/24410473/how-to-convert-this-var-string-to-nsurl-in-swift?rq=1
         guard let url = URL(string: "http://www.beepscore.com") else { return }
         let request = URLRequest(url:url)
