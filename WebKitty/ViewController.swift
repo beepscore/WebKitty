@@ -13,8 +13,6 @@ class ViewController: UIViewController {
 
     // ! implies variable is optional, force unwrapped
     // app will crash if they aren't set before use
-    // changing type from UIWebView to WKWebView affects layout result!!
-    // @IBOutlet var webView: UIWebView!
     var webView: WKWebView!
 
     override func viewDidLoad() {
